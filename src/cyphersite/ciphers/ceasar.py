@@ -1,10 +1,11 @@
 import sys
 import getopt
-from . import common
-
+from cyphersite import common
+from cyphersite.common import exposed
 alphabet = common.english
 
-def run(text, key, decrypt_flag = False):
+@exposed
+def run(text: str, key: int, decrypt_flag: bool = False):
     text = list(text)
     decrypt_flag = -1 if decrypt_flag else 1
 

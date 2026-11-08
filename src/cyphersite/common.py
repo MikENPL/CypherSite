@@ -1,6 +1,10 @@
 def sort_dictionary(input: dict):
     return {k:v for k, v in sorted(input.items(), key=lambda item: item[1], reverse=True)}
 
+def exposed(func):
+    func.exposed = True
+    return func
+    
 polish = [
 'A', 'Ą', 'B', 'C', 'Ć', 'D', 'E', 'Ę', 'F', 'G',
 'H', 'I', 'J', 'K', 'L', 'Ł', 'M', 'N', 'Ń', 'O',

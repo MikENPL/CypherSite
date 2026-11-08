@@ -1,7 +1,11 @@
 import sys
 import getopt
-from . import common, ceasar
+from . import ceasar
 from enum import Enum
+
+from cyphersite import common
+from cyphersite.common import exposed
+alphabet = common.english
 
 class DecipherMode(Enum):
     BRUTE = 1
@@ -12,13 +16,15 @@ frequencies = common.english_frequencies
 def calculate_frequencies(text: str):
     return {i: text.count(i)/len(text) for i in alphabet}
 
-def brute_force(text):
+@exposed
+def brute_force(text: str):
     results = []
     for i in range(len(alphabet)):
         results.append(ceasar.run(text, i))
     return {i: v for i, v in enumerate(results)}
 
-def partial_analysis(text):
+@exposed
+def partial_analysis(text: str):
     cipher_frequencies = common.sort_dictionary(calculate_frequencies(text)) 
     shifts = []
     expected = sorted(frequencies, key=frequencies.get, reverse=True)
@@ -27,7 +33,8 @@ def partial_analysis(text):
         shifts.append((alphabet.index(expected[i]) - alphabet.index(observed[i])) % len(alphabet))
     return max(shifts, key=shifts.count)
 
-def chi_analysis(text):
+@exposed
+def chi_analysis(text: str):
     chi = [0 for _ in range(len(alphabet))]
     for i in range(len(alphabet)):
         cipher_frequencies = calculate_frequencies(ceasar.run(text, i))

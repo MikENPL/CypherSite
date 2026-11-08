@@ -11,8 +11,8 @@
     <body>
         <h1>Cypher</h1>
         <div class="tabs">
-            {% for tab in tabs%}
-                <button>{{ tab }}</button>
+            {% for tab, url in tabs%}
+                <a href="{{ url }}" class="tab">{{ tab }}</a>
             {% endfor %}
         </div>
         <script src="" async defer></script>

@@ -1,5 +1,8 @@
 import sys, getopt
-from . import common, ceasar_analyze, vigenere
+from cyphersite.ciphers import ceasar_analyze, vigenere
+from cyphersite import common
+from cyphersite.common import exposed
+
 
 KASISKI_RANGE = 3
 KASISKI_SENSITIVITY = 15
@@ -62,6 +65,7 @@ def column_split(text: str, columns_num: int):
             columns[i] += text[j]
     return columns
 
+@exposed
 def run(text: str):
     text = ''.join(letter for letter in text.upper() if letter in alphabet)
     slices = kasiski(text)
