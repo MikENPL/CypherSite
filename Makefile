@@ -1,16 +1,16 @@
 .PHONY: build dev run stop
 .DEFAULT_GOAL := help
 build:
-	docker compose build
+	@docker compose build
 
 dev: 
-	docker compose -f compose.yaml -f compose.dev.yaml up -d
+	@docker compose -f compose.yaml -f compose.dev.yaml up -d
 
 run: 
-	docker compose up -d
+	@docker compose up -d
 
 stop:
-	docker compose down
+	@docker compose down
 help:
 	@echo "CypherSite - Available commands"
 	@echo ""
