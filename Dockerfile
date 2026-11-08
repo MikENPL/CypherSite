@@ -3,7 +3,7 @@ FROM python:3.11.18-slim-trixie
 WORKDIR /app/
 
 COPY src/ ./src/
-COPY pyproject.toml uv.lock README.md .
+COPY pyproject.toml uv.lock README.md ./
 
 RUN apt-get update \
 && apt-get install -y curl ca-certificates \

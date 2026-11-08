@@ -1,9 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
+from pathlib import Path
 
 app = FastAPI()
 
+BASE_DIR = Path(__file__).resolve().parent
 
+templates = Jinja2Templates(
+    directory=BASE_DIR / "templates"
+)
 @app.get("/")
-async def root():
-    return {"message": "Hello, World!"}
-
+async def root(request: Request):
+    return templates.TemplateResponse(request, "index.html", {"tabs": ["Hello", "there", ":D"]})
