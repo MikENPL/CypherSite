@@ -1,13 +1,21 @@
-FROM python:3.11.18-slim-trixie
+FROM python:3.12-slim
 
-WORKDIR /app/
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-COPY src/ ./src/
-COPY pyproject.toml uv.lock README.md ./
+WORKDIR /app
 
-RUN apt-get update \
-&& apt-get install -y curl ca-certificates \
-&& curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.local/bin:$PATH"
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    PYTHONUNBUFFERED=1
 
-RUN uv sync
+COPY pyproject.toml uv.lock ./
+
+RUN uv sync --frozen --no-install-project
+
+COPY . .
+
+RUN uv sync --frozen
+
+EXPOSE 8000
+
+CMD ["uv", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
