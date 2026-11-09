@@ -4,21 +4,19 @@ from cyphersite import common
 from cyphersite.common import exposed
 
 
-KASISKI_RANGE = 3
-KASISKI_SENSITIVITY = 15
 alphabet = common.english
 
-def kasiski(text: str):
+def kasiski(text: str, kasiski_range, kasiski_sensitivity):
     slices = {} # Slice : array of indexes
-    for i in range(len(text)-KASISKI_RANGE):
-        slice = text[i:i+KASISKI_RANGE]
+    for i in range(len(text)-kasiski_range):
+        slice = text[i:i+kasiski_range]
         occurences = text.count(slice)
         indexes = []
-        if occurences < KASISKI_SENSITIVITY:
+        if occurences < kasiski_sensitivity:
             continue
-        start = -KASISKI_RANGE
+        start = -kasiski_range
         for _ in range(occurences):
-            start += KASISKI_RANGE + text[start+KASISKI_RANGE:].find(slice)
+            start += kasiski_range + text[start+kasiski_range:].find(slice)
             indexes.append(start)
         slices[slice] = indexes
     return slices
@@ -66,9 +64,9 @@ def column_split(text: str, columns_num: int):
     return columns
 
 @exposed
-def run(text: str):
+def run(text: str, kasiski_range: int = 3, kasiski_sensitivity: int = 15):
     text = ''.join(letter for letter in text.upper() if letter in alphabet)
-    slices = kasiski(text)
+    slices = kasiski(text, kasiski_range, kasiski_sensitivity)
     print(f"Powtarzające się fragmenty: {slices}")
     dividers = get_dividers(slices)
     print(f"Najczęsciej występujące m: {dividers}")
