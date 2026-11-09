@@ -3,13 +3,35 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Cypher</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
     <body>
         <h1>{{ title }}</h1>
+        <div class="functions">
+            {% for func_name, arguments in forms.items() %}
+                <form class="function" method="POST" action="/{{ cipher_name }}/{{ func_name }}">
+                {% for argument, type in arguments %}
+                    {% if type == "str" %}
+                        <label>{{ argument }}</label>
+                        <input type="text" name="{{ argument }}">
+                    {% elif type == "int" %}
+                        <label>{{ argument }}</label>
+                        <input type="number" name="{{ argument }}">
+                    {% elif type == "bool" %}
+                        <label>{{ argument }}</label>
+                        <input type="checkbox" name="{{ argument }}">
+                    {% else %}
+                        <label>{{ argument }}</label>
+                        <input type="text" name="{{ argument }}">
+                    {% endif %}
+                {% endfor %}
+                    <button>Submit</button>
+                </form>
+            {% endfor %}
+        </div>
         <script src="" async defer></script>
     </body>
 </html>
