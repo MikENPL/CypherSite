@@ -7,6 +7,7 @@ alphabet = common.english
 @exposed
 def run(text: str, key: str, decrypt_flag: bool = False):
     text = text.upper()
+    key = key.upper()
     text = list(text)
     key = list(key)
     decrypt_flag = -1 if decrypt_flag else 1
