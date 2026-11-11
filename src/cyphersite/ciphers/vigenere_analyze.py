@@ -53,7 +53,7 @@ def coincidence_index(texts: list[str]):
         for letter in alphabet:
             cis[i] += (text.count(letter)*(text.count(letter)-1))
         cis[i] /= len(text)*(len(text)-1)
-    print(f"IC dla {len(texts)} kolumn: {cis}")
+    # print(f"IC dla {len(texts)} kolumn: {cis}")
     return sum(cis)/len(cis)
 
 def column_split(text: str, columns_num: int):
@@ -66,17 +66,18 @@ def column_split(text: str, columns_num: int):
 
 @exposed
 def run(text: str, kasiski_range: int = 3, kasiski_sensitivity: int = 15):
+    """The key is: """
     text = ''.join(letter for letter in text.upper() if letter in alphabet)
     slices = kasiski(text, kasiski_range, kasiski_sensitivity)
-    print(f"Powtarzające się fragmenty: {slices}")
+    # print(f"Powtarzające się fragmenty: {slices}")
     dividers = get_dividers(slices)
-    print(f"Najczęsciej występujące m: {dividers}")
+    # print(f"Najczęsciej występujące m: {dividers}")
     cis = []
     columns = []
     for i, v in enumerate(dividers):
         columns.append(column_split(text, v))
         cis.append(coincidence_index(columns[i]))
-    print(f"Średnie IC dla wszystkich kolumn {cis}")
+    # print(f"Średnie IC dla wszystkich kolumn {cis}")
     ci = max(cis)
     index = cis.index(ci)
     key = ""

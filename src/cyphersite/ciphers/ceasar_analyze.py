@@ -26,6 +26,7 @@ def brute_force(text: str):
 
 @exposed
 def partial_analysis(text: str):
+    """The key is: """
     text.upper()
     cipher_frequencies = common.sort_dictionary(calculate_frequencies(text)) 
     shifts = []
@@ -37,6 +38,7 @@ def partial_analysis(text: str):
 
 @exposed
 def chi_analysis(text: str):
+    """The key is: """
     text.upper()
     chi = [0 for _ in range(len(alphabet))]
     for i in range(len(alphabet)):
