@@ -7,6 +7,7 @@ from cyphersite.common import exposed
 alphabet = common.english
 
 def kasiski(text: str, kasiski_range, kasiski_sensitivity):
+    text = text.upper()
     slices = {} # Slice : array of indexes
     for i in range(len(text)-kasiski_range):
         slice = text[i:i+kasiski_range]
@@ -95,9 +96,9 @@ def main():
         
     if filename:
         with open(filename, "r") as file:
-            text = file.read().upper()
+            text = file.read()
     else:
-        text = " ".join(args).upper()
+        text = " ".join(args)
 
     key = run(text)
     print(f"Klucz to {key}\n{vigenere.run(text, key, True)}")

@@ -18,6 +18,7 @@ def calculate_frequencies(text: str):
 
 @exposed
 def brute_force(text: str):
+    text = text.upper()
     results = []
     for i in range(len(alphabet)):
         results.append(ceasar.run(text, i))
@@ -25,6 +26,7 @@ def brute_force(text: str):
 
 @exposed
 def partial_analysis(text: str):
+    text.upper()
     cipher_frequencies = common.sort_dictionary(calculate_frequencies(text)) 
     shifts = []
     expected = sorted(frequencies, key=frequencies.get, reverse=True)
@@ -35,6 +37,7 @@ def partial_analysis(text: str):
 
 @exposed
 def chi_analysis(text: str):
+    text.upper()
     chi = [0 for _ in range(len(alphabet))]
     for i in range(len(alphabet)):
         cipher_frequencies = calculate_frequencies(ceasar.run(text, i))
@@ -62,14 +65,14 @@ def main():
 
     if filename:
         with open(filename, "r") as file:
-            text = file.read().upper()
+            text = file.read()
     else:
-        text = " ".join(args).upper()
+        text = " ".join(args)
 
     match mode:
         case DecipherMode.BRUTE:
             print(brute_force(text))
-            exit(0)
+            return
         case DecipherMode.PARTIAL:
             key = partial_analysis(text)
         case DecipherMode.CHI:

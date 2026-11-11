@@ -6,6 +6,7 @@ alphabet = common.english
 
 @exposed
 def run(text: str, key: str, decrypt_flag: bool = False):
+    text = text.upper()
     text = list(text)
     key = list(key)
     decrypt_flag = -1 if decrypt_flag else 1
@@ -36,9 +37,9 @@ def main():
         
     if filename:
         with open(filename, "r") as file:
-            text = file.read().upper()
+            text = file.read()
     else:
-        text = " ".join(args).upper()
+        text = " ".join(args)
         
     print(run(text, key, decrypt_flag))
 
