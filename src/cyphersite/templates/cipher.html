@@ -6,32 +6,42 @@
         <title>Cypher</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="../static/css/style.css">
     </head>
     <body>
         <h1>{{ title }}</h1>
         <div class="functions">
-            {% for func_name, arguments in forms.items() %}
-                <form class="function" method="POST" action="/{{ cipher_name }}/{{ func_name }}">
-                {% for argument, type in arguments %}
-                    {% if type == "str" %}
-                        <label>{{ argument }}</label>
-                        <input type="text" name="{{ argument }}">
-                    {% elif type == "int" %}
-                        <label>{{ argument }}</label>
-                        <input type="number" name="{{ argument }}">
-                    {% elif type == "bool" %}
-                        <label>{{ argument }}</label>
-                        <input type="checkbox" name="{{ argument }}">
-                    {% else %}
-                        <label>{{ argument }}</label>
-                        <input type="text" name="{{ argument }}">
-                    {% endif %}
+            <select id="function-select">
+                {% for func_name, arguments in forms.items() %}
+                    <option value="{{ func_name }}">{{ func_name.replace("_", " ").title() }}</option>
                 {% endfor %}
-                    <button>Submit</button>
+            </select>
+            {% for func_name, arguments in forms.items() %}
+                <form class="function" id="{{ func_name }}" method="POST" action="/{{ cipher_name }}/{{ func_name }}">
+                {% for argument, type in arguments %}
+                <div class="form-group">    
+                    {% if type == "str" %}
+                    <label>{{ argument.replace("_", " ").title() }}</label>
+                    <input type="text" name="{{ argument }}">
+                    {% elif type == "int" %}
+                    <label>{{ argument.replace("_", " ").title() }}</label>
+                    <input type="number" name="{{ argument }}">
+                    {% elif type == "bool" %}
+                    <label>{{ argument.replace("_", " ").title() }}</label>
+                    <input type="checkbox" name="{{ argument }}">
+                    {% else %}
+                    <label>{{ argument.replace("_", " ").title() }}</label>
+                    <input type="text" name="{{ argument }}">
+                    {% endif %}
+                </div>
+                {% endfor %}
+                    <button class="button">Submit</button>
                 </form>
             {% endfor %}
         </div>
-        <script src="" async defer></script>
+        <div id="results">
+            <p><span id="result"></span><span id="result_highlight"></span></p>
+        </div>
+        <script src="../static/js/main.js" async defer></script>
     </body>
 </html>
